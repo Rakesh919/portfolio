@@ -12,7 +12,6 @@ import { FaLinkedin, FaGithub } from 'react-icons/fa';
 interface ContactFormData {
   name: string;
   email: string;
-  subject: string;
   message: string;
 }
 
@@ -20,7 +19,6 @@ export default function Contact() {
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
-    subject: '',
     message: '',
   });
 
@@ -36,7 +34,7 @@ export default function Contact() {
         title: 'Message Sent!',
         description: "Thank you for your message! I'll get back to you soon.",
       });
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', message: '' });
     },
     onError: () => {
       toast({
@@ -181,22 +179,7 @@ export default function Contact() {
                   />
                 </div>
                 
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-semibold text-secondary mb-2">
-                    Subject
-                  </label>
-                  <Input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    placeholder="Project Discussion"
-                    required
-                    className="transition-all duration-300 focus:ring-2 focus:ring-primary focus:border-transparent"
-                  />
-                </div>
-                
+
                 <div>
                   <label htmlFor="message" className="block text-sm font-semibold text-secondary mb-2">
                     Message

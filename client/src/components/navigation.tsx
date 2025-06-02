@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 const navigationItems = [
   { name: 'Home', href: '#home' },
@@ -50,55 +51,61 @@ export default function Navigation() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-white/90 backdrop-blur-md'
-    } border-b border-slate-200/50`}>
+      isScrolled 
+        ? 'bg-background/95 backdrop-blur-md shadow-lg border-b border-border/50' 
+        : 'bg-background/80 backdrop-blur-md border-b border-border/30'
+    }`}>
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <div className="text-2xl font-bold gradient-text">RS</div>
+          <div className="text-3xl font-black gradient-text glow-effect">RS</div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             {navigationItems.map((item) => (
               <button
                 key={item.name}
                 onClick={() => handleNavClick(item.href)}
-                className={`transition-colors duration-300 ${
+                className={`transition-all duration-300 font-medium px-3 py-2 rounded-lg ${
                   activeSection === item.href.substring(1)
-                    ? 'text-primary font-semibold'
-                    : 'text-slate-600 hover:text-primary'
+                    ? 'text-primary bg-primary/10 font-bold shadow-lg'
+                    : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
                 }`}
               >
                 {item.name}
               </button>
             ))}
+            <ThemeToggle />
           </div>
 
           {/* Mobile Navigation */}
-          <Sheet>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-64">
-              <div className="flex flex-col space-y-4 mt-8">
-                {navigationItems.map((item) => (
-                  <button
-                    key={item.name}
-                    onClick={() => handleNavClick(item.href)}
-                    className={`text-left py-2 px-4 rounded-lg transition-colors duration-300 ${
-                      activeSection === item.href.substring(1)
-                        ? 'text-primary bg-primary/10 font-semibold'
-                        : 'text-slate-600 hover:text-primary hover:bg-slate-100'
-                    }`}
-                  >
-                    {item.name}
-                  </button>
-                ))}
-              </div>
-            </SheetContent>
-          </Sheet>
+          <div className="flex items-center space-x-3 md:hidden">
+            <ThemeToggle />
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="glass-effect">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-64 glass-effect">
+                <div className="flex flex-col space-y-4 mt-8">
+                  {navigationItems.map((item) => (
+                    <button
+                      key={item.name}
+                      onClick={() => handleNavClick(item.href)}
+                      className={`text-left py-3 px-4 rounded-lg transition-all duration-300 font-medium ${
+                        activeSection === item.href.substring(1)
+                          ? 'text-primary bg-primary/20 font-bold shadow-lg'
+                          : 'text-foreground/70 hover:text-primary hover:bg-primary/10'
+                      }`}
+                    >
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </nav>
